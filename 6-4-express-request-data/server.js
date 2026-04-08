@@ -109,6 +109,9 @@ import express from "express";
 
 // create express app instance to create web server
 const app = express();
+app.get("/", (req, res) => {
+  res.send("Server is up");
+});
 
 // Query params: /echo?name=Ali&age=22
 app.get("/echo", (req, res) => {
@@ -143,7 +146,7 @@ app.get("/profile/:first/:last", (req, res) => {
 app.param("userId", (req, res, next, userId) => {
   const userIdNum = Number(userId);
 
-  if (userIdNum <= 0 || isNaN(userIdNum)) {
+  if (userIdNum <= 0 || Number.isNaN(userIdNum)) {
     return res.status(400).json({
       ok: false,
       error: "userId must be positive number",
@@ -166,4 +169,3 @@ app.get("/users/:userId", (req, res) => {
 app.listen(3000, () => {
   console.log("API running at http://localhost:3000");
 });
-
